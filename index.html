@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ресторан по простому | рецепты</title>
-  <!-- Спокойная палитра: приглушённый зелёный, тёплый песочный, мягкий серый -->
+
   <style>
     * {
       margin: 0;
@@ -14,17 +14,17 @@
     }
 
     body {
-      background-color: #f9f5ed;  /* тёплый молочный с налётом песочного */
-      color: #3e4a3f;              /* тёмно-травяной, почти серо-зелёный */
+      background-color: #f9f5ed;  
+      color: #3e4a3f;              
       line-height: 1.5;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
     }
 
-    /* навигация — очень спокойная */
+
     .navbar {
-      background-color: #d9d0b5;   /* мягкий хаки/песок */
+      background-color: #d9d0b5;   
       padding: 1.2rem 2rem;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.03);
       border-bottom: 1px solid #c0b79b;
@@ -56,7 +56,7 @@
       color: #1f2a20;
     }
 
-    /* контейнер для содержимого */
+
     .container {
       max-width: 1200px;
       margin: 2.5rem auto;
@@ -87,7 +87,7 @@
       font-size: 1.3rem;
     }
 
-    /* карточки для рецептов и инструментов */
+
     .card-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
@@ -117,7 +117,7 @@
       margin-top: 0.4rem;
     }
 
-    /* стили для ссылок внутри карточек */
+   
     .recipe-link {
       text-decoration: none;
       color: inherit;
@@ -146,7 +146,7 @@
       margin: 2rem 0;
     }
 
-    /* страница об авторе — персональный блок */
+   
     .about-card {
       background: #fffcf4;
       border-radius: 32px;
@@ -197,7 +197,7 @@
       border: 3px solid #fff3e0;
     }
 
-    /* дополнительно: метка звездочки */
+  
     .badge-star {
       background-color: #c5bc9f;
       color: #2b3829;
@@ -219,7 +219,7 @@
       font-size: 0.95rem;
     }
 
-    /* простая адаптация */
+  
     @media (max-width: 600px) {
       .nav-links { gap: 1rem; }
       .about-field { flex-direction: column; align-items: flex-start; gap: 0.3rem; }
@@ -228,7 +228,7 @@
   </style>
 </head>
 <body>
-  <!-- НАВИГАЦИЯ (ЧЕТЫРЕ СТРАНИЦЫ) -->
+  
   <nav class="navbar">
     <div class="nav-links">
       <a href="#home" data-page="home">Главная</a>
@@ -238,9 +238,9 @@
     </div>
   </nav>
 
-  <!-- КОНТЕЙНЕР ДЛЯ ДИНАМИЧЕСКОЙ ЗАГРУЗКИ СТРАНИЦ -->
+  
   <main class="container" id="page-content">
-    <!-- Сюда будет рендериться текущая страница -->
+    
   </main>
 
   <footer>
@@ -249,10 +249,9 @@
 
   <script>
     (function() {
-      // ----- ДАННЫЕ ДЛЯ СТРАНИЦ -----
-      // Теперь каждый рецепт содержит ссылку на реальный интернет-ресурс
+     
       const content = {
-        // 1. Главная страница: основные рецепты с активными ссылками
+     
         home: {
           title: 'Домашние рецепты',
           items: [
@@ -263,7 +262,7 @@
             { name: 'Салат с огурцом и мятой', time: '10 мин', сложность: 'легко', url: 'https://www.gastronom.ru/recipe/28551/salat-s-ogurcami-i-mjatoj' }
           ]
         },
-        // 2. Рецепты со звездочкой (сложные) с активными ссылками
+
         starred: {
           title: 'Рецепты ★ (требуют мастерства)',
           items: [
@@ -274,7 +273,7 @@
             { name: 'Торт «Три шоколада» с зеркальной глазурью', time: '5 ч', сложность: 'сложно', url: 'https://www.gastronom.ru/recipe/41065/tort-tri-shokolada' }
           ]
         },
-        // 3. Чем готовим — инструменты и модели (без изменений)
+      
         tools: {
           title: 'Кухонные инструменты · любимые модели',
           items: [
@@ -285,7 +284,7 @@
             { tool: 'Мясорубка электрическая', model: 'Kenwood MG510', особенность: 'насадка для кеббе' }
           ]
         },
-        // 4. Об авторе — персональные данные (без изменений)
+      
         about: {
           name: 'Власов Владислав',
           age: '17 лет',
@@ -294,13 +293,13 @@
         }
       };
 
-      // Функция отрисовки главной / рецепты со звездой (с кликабельными ссылками)
+     
       function renderHomeOrStarred(pageId) {
         const data = content[pageId];
         let html = `<h1>${data.title}</h1>`;
         html += `<div class="card-grid">`;
         data.items.forEach(item => {
-          // Оборачиваем всю карточку в ссылку, но оставляем визуал карточки
+         
           html += `<div class="card">`;
           html += `<a href="${item.url}" target="_blank" rel="noopener noreferrer" class="recipe-link">`;
           if (pageId === 'starred') html += `<div class="badge-star">⭐ сложный рецепт</div>`;
@@ -319,7 +318,7 @@
         return html;
       }
 
-      // Рендер страницы инструментов
+
       function renderTools() {
         const data = content.tools;
         let html = `<h1>${data.title}</h1>`;
@@ -336,7 +335,6 @@
         return html;
       }
 
-      // Рендер страницы "Об авторе" (обновлённая версия)
       function renderAbout() {
         const a = content.about;
         let html = `<h1>Об авторе</h1>`;
@@ -351,7 +349,7 @@
         return html;
       }
 
-      // Основная функция переключения страниц
+  
       function navigateToPage(pageId) {
         let htmlString = '';
         if (pageId === 'home' || pageId === 'starred') {
@@ -367,7 +365,7 @@
         const container = document.getElementById('page-content');
         if (container) container.innerHTML = htmlString;
 
-        // подсветка активного пункта меню
+      
         document.querySelectorAll('.nav-links a').forEach(link => {
           link.style.fontWeight = '400';
           link.style.borderBottomColor = 'transparent';
@@ -377,11 +375,11 @@
           }
         });
 
-        // меняем URL hash без перезагрузки
+       
         window.location.hash = pageId;
       }
 
-      // Прослушиваем клики по навигации
+
       document.querySelectorAll('.nav-links a').forEach(link => {
         link.addEventListener('click', (e) => {
           e.preventDefault();
@@ -390,7 +388,7 @@
         });
       });
 
-      // При загрузке или изменении hash открываем соответствующую страницу
+
       function loadPageFromHash() {
         let hash = window.location.hash.slice(1);
         if (!hash || !['home','starred','tools','about'].includes(hash)) {
