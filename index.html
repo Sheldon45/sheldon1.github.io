@@ -1,16 +1,234 @@
 <!DOCTYPE html>
 <html lang="ru">
-<link rel="stylesheet" href="styles.css">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ресторан по простому | рецепты</title>
- 
+  <!-- Спокойная палитра: приглушённый зелёный, тёплый песочный, мягкий серый -->
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background-color: #f9f5ed;  /* тёплый молочный с налётом песочного */
+      color: #3e4a3f;              /* тёмно-травяной, почти серо-зелёный */
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* навигация — очень спокойная */
+    .navbar {
+      background-color: #d9d0b5;   /* мягкий хаки/песок */
+      padding: 1.2rem 2rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.03);
+      border-bottom: 1px solid #c0b79b;
+    }
+
+    .nav-links {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2.5rem;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: #2e3b2f;
+      padding: 0.4rem 0.2rem;
+      border-bottom: 2px solid transparent;
+      transition: border-color 0.2s, color 0.2s;
+      letter-spacing: 0.3px;
+    }
+
+    .nav-links a:hover {
+      border-bottom-color: #7f8f7a;
+      color: #1f2a20;
+    }
+
+    /* контейнер для содержимого */
+    .container {
+      max-width: 1200px;
+      margin: 2.5rem auto;
+      padding: 0 2rem;
+      flex: 1;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 350;
+      margin-bottom: 2rem;
+      color: #4a5b4b;
+      border-left: 5px solid #b8b094;
+      padding-left: 1.2rem;
+    }
+
+    h2 {
+      font-weight: 350;
+      color: #5b6d5c;
+      margin: 1.8rem 0 1rem 0;
+      font-size: 1.8rem;
+    }
+
+    h3 {
+      font-weight: 400;
+      color: #5a6a4f;
+      margin-bottom: 0.5rem;
+      font-size: 1.3rem;
+    }
+
+    /* карточки для рецептов и инструментов */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 2rem;
+      margin-top: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .card {
+      background-color: #ffffffda;
+      backdrop-filter: blur(2px);
+      border-radius: 22px;
+      padding: 1.6rem 1.4rem;
+      box-shadow: 0 8px 18px -8px rgba(80, 70, 50, 0.12);
+      border: 1px solid #e4dbc6;
+      transition: transform 0.2s ease, box-shadow 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 16px 24px -10px rgba(70, 60, 40, 0.15);
+      border-color: #cbc2a8;
+    }
+
+    .card p {
+      color: #4e5747;
+      margin-top: 0.4rem;
+    }
+
+    /* стили для ссылок внутри карточек */
+    .recipe-link {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      height: 100%;
+      width: 100%;
+    }
+    
+    .recipe-link:hover h3 {
+      color: #8a7b5a;
+      text-decoration: underline;
+      text-decoration-color: #b8b094;
+      text-underline-offset: 4px;
+    }
+
+    .stars {
+      color: #b79b5f;
+      font-size: 1.2rem;
+      letter-spacing: 2px;
+      margin: 0.5rem 0 0.2rem;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid #d6cdb5;
+      margin: 2rem 0;
+    }
+
+    /* страница об авторе — персональный блок */
+    .about-card {
+      background: #fffcf4;
+      border-radius: 32px;
+      padding: 2.2rem 2.5rem;
+      border: 1px solid #d9cfb6;
+      max-width: 700px;
+      margin: 2rem 0;
+      box-shadow: 0 6px 18px #ece3d2;
+    }
+
+    .about-field {
+      display: flex;
+      align-items: baseline;
+      padding: 0.9rem 0;
+      border-bottom: 1px dashed #d0c4aa;
+    }
+
+    .about-field:last-child {
+      border-bottom: none;
+    }
+
+    .field-label {
+      width: 160px;
+      font-weight: 400;
+      color: #6b7a66;
+      font-size: 1.2rem;
+    }
+
+    .field-value {
+      flex: 1;
+      color: #364336;
+      font-size: 1.3rem;
+      font-weight: 330;
+      padding-left: 0.5rem;
+    }
+
+    .avatar-placeholder {
+      width: 100px;
+      height: 100px;
+      background-color: #d0c7b1;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.8rem;
+      font-size: 2.8rem;
+      color: #726b54;
+      border: 3px solid #fff3e0;
+    }
+
+    /* дополнительно: метка звездочки */
+    .badge-star {
+      background-color: #c5bc9f;
+      color: #2b3829;
+      font-size: 0.8rem;
+      padding: 0.3rem 0.7rem;
+      border-radius: 40px;
+      display: inline-block;
+      margin-bottom: 0.8rem;
+      letter-spacing: 0.5px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: #8e9a89;
+      border-top: 1px solid #d6cdb5;
+      margin-top: 2rem;
+      background-color: #ece3d2a0;
+      font-size: 0.95rem;
+    }
+
+    /* простая адаптация */
+    @media (max-width: 600px) {
+      .nav-links { gap: 1rem; }
+      .about-field { flex-direction: column; align-items: flex-start; gap: 0.3rem; }
+      .field-label { width: auto; }
+    }
   </style>
 </head>
 <body>
-
+  <!-- НАВИГАЦИЯ (ЧЕТЫРЕ СТРАНИЦЫ) -->
   <nav class="navbar">
     <div class="nav-links">
       <a href="#home" data-page="home">Главная</a>
@@ -20,9 +238,9 @@
     </div>
   </nav>
 
-
+  <!-- КОНТЕЙНЕР ДЛЯ ДИНАМИЧЕСКОЙ ЗАГРУЗКИ СТРАНИЦ -->
   <main class="container" id="page-content">
-
+    <!-- Сюда будет рендериться текущая страница -->
   </main>
 
   <footer>
@@ -31,9 +249,10 @@
 
   <script>
     (function() {
-
+      // ----- ДАННЫЕ ДЛЯ СТРАНИЦ -----
+      // Теперь каждый рецепт содержит ссылку на реальный интернет-ресурс
       const content = {
-
+        // 1. Главная страница: основные рецепты с активными ссылками
         home: {
           title: 'Домашние рецепты',
           items: [
@@ -44,7 +263,7 @@
             { name: 'Салат с огурцом и мятой', time: '10 мин', сложность: 'легко', url: 'https://www.gastronom.ru/recipe/28551/salat-s-ogurcami-i-mjatoj' }
           ]
         },
-  
+        // 2. Рецепты со звездочкой (сложные) с активными ссылками
         starred: {
           title: 'Рецепты ★ (требуют мастерства)',
           items: [
@@ -55,7 +274,7 @@
             { name: 'Торт «Три шоколада» с зеркальной глазурью', time: '5 ч', сложность: 'сложно', url: 'https://www.gastronom.ru/recipe/41065/tort-tri-shokolada' }
           ]
         },
-     
+        // 3. Чем готовим — инструменты и модели (без изменений)
         tools: {
           title: 'Кухонные инструменты · любимые модели',
           items: [
@@ -66,7 +285,7 @@
             { tool: 'Мясорубка электрическая', model: 'Kenwood MG510', особенность: 'насадка для кеббе' }
           ]
         },
-    
+        // 4. Об авторе — персональные данные (без изменений)
         about: {
           name: 'Власов Владислав',
           age: '17 лет',
@@ -75,12 +294,13 @@
         }
       };
 
-     
+      // Функция отрисовки главной / рецепты со звездой (с кликабельными ссылками)
       function renderHomeOrStarred(pageId) {
         const data = content[pageId];
         let html = `<h1>${data.title}</h1>`;
         html += `<div class="card-grid">`;
         data.items.forEach(item => {
+          // Оборачиваем всю карточку в ссылку, но оставляем визуал карточки
           html += `<div class="card">`;
           html += `<a href="${item.url}" target="_blank" rel="noopener noreferrer" class="recipe-link">`;
           if (pageId === 'starred') html += `<div class="badge-star">⭐ сложный рецепт</div>`;
@@ -99,6 +319,7 @@
         return html;
       }
 
+      // Рендер страницы инструментов
       function renderTools() {
         const data = content.tools;
         let html = `<h1>${data.title}</h1>`;
@@ -115,7 +336,7 @@
         return html;
       }
 
-
+      // Рендер страницы "Об авторе" (обновлённая версия)
       function renderAbout() {
         const a = content.about;
         let html = `<h1>Об авторе</h1>`;
@@ -130,7 +351,7 @@
         return html;
       }
 
-
+      // Основная функция переключения страниц
       function navigateToPage(pageId) {
         let htmlString = '';
         if (pageId === 'home' || pageId === 'starred') {
@@ -146,7 +367,7 @@
         const container = document.getElementById('page-content');
         if (container) container.innerHTML = htmlString;
 
-       
+        // подсветка активного пункта меню
         document.querySelectorAll('.nav-links a').forEach(link => {
           link.style.fontWeight = '400';
           link.style.borderBottomColor = 'transparent';
@@ -156,9 +377,11 @@
           }
         });
 
+        // меняем URL hash без перезагрузки
         window.location.hash = pageId;
       }
 
+      // Прослушиваем клики по навигации
       document.querySelectorAll('.nav-links a').forEach(link => {
         link.addEventListener('click', (e) => {
           e.preventDefault();
@@ -167,6 +390,7 @@
         });
       });
 
+      // При загрузке или изменении hash открываем соответствующую страницу
       function loadPageFromHash() {
         let hash = window.location.hash.slice(1);
         if (!hash || !['home','starred','tools','about'].includes(hash)) {
